@@ -30,10 +30,10 @@ function Dashboard() {
     <div className="min-h-screen p-4 sm:p-6">
       <div className="mx-auto flex max-w-[1440px] flex-col gap-5">
         <TopNav />
-        <div className="grid gap-5 lg:grid-cols-20">
-          <Panel className="lg:col-span-5"><LeftPanel /></Panel>
-          <Panel className="lg:col-span-9"><CenterPanel /></Panel>
-          <Panel className="lg:col-span-6"><RightPanel /></Panel>
+        <div className="grid gap-5 lg:grid-cols-[1fr_1.8fr_1.2fr]">
+          <Panel><LeftPanel /></Panel>
+          <Panel><CenterPanel /></Panel>
+          <Panel><RightPanel /></Panel>
         </div>
       </div>
     </div>
