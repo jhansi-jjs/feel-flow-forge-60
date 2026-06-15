@@ -1,37 +1,39 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { TopBar } from "@/components/dashboard/TopBar";
-import { WebcamPanel } from "@/components/dashboard/WebcamPanel";
-import { JournalPanel } from "@/components/dashboard/JournalPanel";
-import { SummaryPanel } from "@/components/dashboard/SummaryPanel";
+import { TopNav } from "@/components/mindmirror/TopNav";
+import { LeftPanel } from "@/components/mindmirror/LeftPanel";
+import { CenterPanel } from "@/components/mindmirror/CenterPanel";
+import { RightPanel } from "@/components/mindmirror/RightPanel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Mindwell — Mental Wellness Dashboard" },
-      { name: "description", content: "Track your emotional state in real time with live emotion detection, sentiment journaling, and a daily mood timeline." },
-      { property: "og:title", content: "Mindwell — Mental Wellness Dashboard" },
-      { property: "og:description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline in one calm space." },
+      { title: "MindMirror AI — Your Mental Health Companion" },
+      { name: "description", content: "AI-powered mental wellness companion with live emotion detection, journaling, sentiment analysis, and mood tracking." },
+      { property: "og:title", content: "MindMirror AI — Your Mental Health Companion" },
+      { property: "og:description", content: "Live emotion detection, journaling, and mood tracking with an empathetic AI companion." },
       { property: "og:type", content: "website" },
     ],
   }),
   component: Dashboard,
 });
 
+function Panel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <section className={`rounded-3xl bg-surface/60 p-5 ring-1 ring-border shadow-soft backdrop-blur-md ${className}`}>
+      {children}
+    </section>
+  );
+}
+
 function Dashboard() {
   return (
     <div className="min-h-screen p-4 sm:p-6">
-      <div className="mx-auto flex max-w-7xl flex-col gap-6">
-        <TopBar />
-        <div className="grid gap-6 lg:grid-cols-12">
-          <section className="rounded-3xl bg-card/60 p-5 backdrop-blur-sm ring-1 ring-border shadow-soft lg:col-span-3">
-            <WebcamPanel />
-          </section>
-          <section className="rounded-3xl bg-card/60 p-5 backdrop-blur-sm ring-1 ring-border shadow-soft lg:col-span-5">
-            <JournalPanel />
-          </section>
-          <section className="rounded-3xl bg-card/60 p-5 backdrop-blur-sm ring-1 ring-border shadow-soft lg:col-span-4">
-            <SummaryPanel />
-          </section>
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-5">
+        <TopNav />
+        <div className="grid gap-5 lg:grid-cols-[1fr_1.8fr_1.2fr]">
+          <Panel><LeftPanel /></Panel>
+          <Panel><CenterPanel /></Panel>
+          <Panel><RightPanel /></Panel>
         </div>
       </div>
     </div>
