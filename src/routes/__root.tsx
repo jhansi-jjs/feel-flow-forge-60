@@ -86,6 +86,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Mindwell — Mental Wellness Dashboard" },
+      { name: "twitter:description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43f374fd-ec5c-4611-9808-3fd34f3cc863/id-preview-44090300--c6538c1a-b04e-4dd9-865e-3c86ba68f842.lovable.app-1781519294116.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43f374fd-ec5c-4611-9808-3fd34f3cc863/id-preview-44090300--c6538c1a-b04e-4dd9-865e-3c86ba68f842.lovable.app-1781519294116.png" },
     ],
     links: [
       {
