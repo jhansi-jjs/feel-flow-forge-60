@@ -1,7 +1,10 @@
+import { useMemo } from "react";
+import { Link } from "@tanstack/react-router";
 import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { Flame, Users, TrendingUp } from "lucide-react";
+import { useSessions } from "@/hooks/use-sessions";
 
-const DATA = [
+const SEED = [
   { session: "S1", mood: 4 },
   { session: "S2", mood: 5 },
   { session: "S3", mood: 3 },
@@ -12,6 +15,23 @@ const DATA = [
 ];
 
 export function RightPanel() {
+  const { sessions } = useSessions();
+
+  const data = useMemo(() => {
+    if (sessions.length === 0) return SEED;
+    const recent = sessions.slice(-7);
+    const baseCount = Math.max(0, 7 - recent.length);
+    const base = SEED.slice(0, baseCount);
+    const live = recent.map((s, i) => ({
+      session: `S${baseCount + i + 1}`,
+      mood: s.mood,
+    }));
+    return [...base, ...live];
+  }, [sessions]);
+
+  const streak = 1 + sessions.length;
+  const delta = data[data.length - 1].mood - data[0].mood;
+
   return (
     <div className="flex h-full flex-col gap-5">
       <div className="flex items-center justify-between gap-3">
@@ -19,15 +39,21 @@ export function RightPanel() {
           <h2 className="truncate text-lg font-bold tracking-tight">Mood Timeline</h2>
           <p className="text-xs text-muted-foreground">Last 7 sessions</p>
         </div>
-        <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-positive/15 px-2.5 py-1 text-[11px] font-semibold text-positive ring-1 ring-positive/30">
+        <span
+          className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold ring-1 ${
+            delta >= 0
+              ? "bg-positive/15 text-positive ring-positive/30"
+              : "bg-sos/15 text-sos ring-sos/30"
+          }`}
+        >
           <TrendingUp className="h-3 w-3" />
-          +2
+          {delta >= 0 ? `+${delta}` : delta}
         </span>
       </div>
 
       <div className="h-56 rounded-2xl bg-surface-2/40 p-3 ring-1 ring-border">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={DATA} margin={{ top: 8, right: 8, left: -22, bottom: 0 }}>
+          <LineChart data={data} margin={{ top: 8, right: 8, left: -22, bottom: 0 }}>
             <defs>
               <linearGradient id="moodLine" x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="var(--color-primary)" />
@@ -68,7 +94,7 @@ export function RightPanel() {
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Session Streak
               </p>
-              <p className="text-2xl font-bold">1 🔥</p>
+              <p className="text-2xl font-bold">{streak} 🔥</p>
             </div>
           </div>
           <p className="text-right text-[11px] leading-tight text-muted-foreground">
@@ -77,10 +103,13 @@ export function RightPanel() {
         </div>
       </div>
 
-      <button className="mt-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-surface-2 px-4 py-3 text-sm font-semibold ring-1 ring-border transition hover:bg-surface-2/70">
+      <Link
+        to="/caregiver"
+        className="mt-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-surface-2 px-4 py-3 text-sm font-semibold ring-1 ring-border transition hover:bg-surface-2/70"
+      >
         <Users className="h-4 w-4" />
         Caregiver View
-      </button>
+      </Link>
     </div>
   );
 }
