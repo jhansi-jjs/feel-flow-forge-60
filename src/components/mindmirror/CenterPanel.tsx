@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Sparkles, Mic, Save, Calendar, Lightbulb } from "lucide-react";
+import { useSessions } from "@/hooks/use-sessions";
 
 const TIPS = [
   "Try the 5-4-3-2-1 grounding: name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste.",
@@ -8,9 +10,26 @@ const TIPS = [
   "Notice the thought, label it ('worry', 'judgment'), and let it pass like a cloud.",
 ];
 
+const POSITIVE = ["good", "great", "happy", "calm", "grateful", "love", "joy", "hope", "peace", "proud", "amazing"];
+const NEGATIVE = ["sad", "bad", "angry", "anxious", "stress", "tired", "hate", "worry", "afraid", "lonely", "hurt"];
+
+function scoreText(t: string) {
+  const words = t.toLowerCase().match(/\b[a-z']+\b/g) ?? [];
+  let s = 0;
+  for (const w of words) {
+    if (POSITIVE.includes(w)) s += 1;
+    if (NEGATIVE.includes(w)) s -= 1;
+  }
+  // mood 0–10, risk 0–10 (inverse-ish)
+  const mood = Math.max(0, Math.min(10, 5 + s));
+  const risk = Math.max(0, Math.min(10, 5 - s));
+  return { mood, risk };
+}
+
 export function CenterPanel() {
   const [text, setText] = useState("");
   const [tip, setTip] = useState<string | null>(null);
+  const { addSession } = useSessions();
 
   const today = new Date().toLocaleDateString(undefined, {
     weekday: "long",
@@ -18,8 +37,18 @@ export function CenterPanel() {
     day: "numeric",
   });
 
-  const analyze = () => {
-    setTip(TIPS[Math.floor(Math.random() * TIPS.length)]);
+  const analyze = () => setTip(TIPS[Math.floor(Math.random() * TIPS.length)]);
+
+  const save = () => {
+    const entry = text.trim();
+    if (!entry) {
+      toast.error("Write something first");
+      return;
+    }
+    const { mood, risk } = scoreText(entry);
+    addSession({ entry, mood, riskScore: risk });
+    toast.success("Entry saved ✓");
+    setText("");
   };
 
   return (
@@ -56,7 +85,10 @@ export function CenterPanel() {
           <Mic className="h-4 w-4" />
           Voice Input 🎙
         </button>
-        <button className="inline-flex items-center justify-center gap-2 rounded-xl bg-surface-2 px-4 py-2.5 text-sm font-semibold ring-1 ring-border transition hover:bg-surface-2/70">
+        <button
+          onClick={save}
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-surface-2 px-4 py-2.5 text-sm font-semibold ring-1 ring-border transition hover:bg-surface-2/70"
+        >
           <Save className="h-4 w-4" />
           Save Entry
         </button>
@@ -68,9 +100,7 @@ export function CenterPanel() {
             <Lightbulb className="h-4 w-4" />
           </div>
           <div className="min-w-0">
-            <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">
-              CBT Tip
-            </p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-primary">CBT Tip</p>
             <p className="mt-1 text-sm leading-relaxed">
               {tip ?? "Your AI therapist is listening..."}
             </p>
