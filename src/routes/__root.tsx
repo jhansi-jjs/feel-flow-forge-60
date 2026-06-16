@@ -12,6 +12,8 @@ import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Onboarding } from "@/components/mindmirror/Onboarding";
+import { HistoryDrawer } from "@/components/mindmirror/HistoryDrawer";
 
 function NotFoundComponent() {
   return (
@@ -78,15 +80,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Mindwell — Mental Wellness Dashboard" },
+      { title: "MindMirror AI — Your Mental Health Companion" },
       { name: "description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
-      { name: "author", content: "Mindwell" },
-      { property: "og:title", content: "Mindwell — Mental Wellness Dashboard" },
+      { name: "author", content: "MindMirror AI" },
+      { property: "og:title", content: "MindMirror AI — Your Mental Health Companion" },
       { property: "og:description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Mindwell — Mental Wellness Dashboard" },
+      { name: "twitter:title", content: "MindMirror AI — Your Mental Health Companion" },
       { name: "twitter:description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43f374fd-ec5c-4611-9808-3fd34f3cc863/id-preview-44090300--c6538c1a-b04e-4dd9-865e-3c86ba68f842.lovable.app-1781519294116.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43f374fd-ec5c-4611-9808-3fd34f3cc863/id-preview-44090300--c6538c1a-b04e-4dd9-865e-3c86ba68f842.lovable.app-1781519294116.png" },
@@ -123,8 +125,9 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <Onboarding />
+      <HistoryDrawer />
       <div className="pointer-events-none fixed bottom-3 left-3 z-50 rounded-full bg-surface/80 px-3 py-1.5 text-[11px] text-muted-foreground ring-1 ring-border backdrop-blur-md">
         🔒 Privacy First — All processing is local
       </div>
