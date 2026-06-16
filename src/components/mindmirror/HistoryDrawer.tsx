@@ -20,12 +20,12 @@ export function HistoryDrawer() {
     <>
       <div
         onClick={() => setOpen(false)}
-        className={`fixed inset-0 z-[90] bg-background/60 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[90] bg-background/80 transition-opacity duration-300 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
       <aside
-        className={`fixed right-0 top-0 z-[95] h-full w-[320px] max-w-[90vw] bg-surface/95 ring-1 ring-border shadow-soft backdrop-blur-md transition-transform duration-300 ${
+        className={`fixed right-0 top-0 z-[95] h-full w-80 max-w-[90vw] bg-surface ring-1 ring-border transition-transform duration-300 ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -34,7 +34,7 @@ export function HistoryDrawer() {
             <h3 className="text-base font-bold tracking-tight">Session History</h3>
             <button
               onClick={() => setOpen(false)}
-              className="grid h-8 w-8 place-items-center rounded-lg bg-surface-2 ring-1 ring-border transition hover:bg-surface-2/70"
+              className="grid h-8 w-8 place-items-center rounded-lg bg-background ring-1 ring-border transition hover:bg-surface-2"
               aria-label="Close history"
             >
               <X className="h-4 w-4" />
@@ -51,10 +51,10 @@ export function HistoryDrawer() {
                   const dot = s.riskScore > 7 ? "🔴" : s.riskScore >= 4 ? "🟡" : "🟢";
                   const tone =
                     s.riskScore > 7
-                      ? "bg-sos/15 text-sos ring-sos/30"
+                      ? "bg-destructive/20 text-destructive ring-destructive/40"
                       : s.riskScore >= 4
-                        ? "bg-warning/15 text-warning ring-warning/30"
-                        : "bg-positive/15 text-positive ring-positive/30";
+                        ? "bg-warning/20 text-warning ring-warning/40"
+                        : "bg-positive/20 text-positive ring-positive/40";
                   const date = new Date(s.timestamp).toLocaleString(undefined, {
                     month: "short",
                     day: "numeric",
@@ -65,7 +65,7 @@ export function HistoryDrawer() {
                   return (
                     <li
                       key={s.timestamp}
-                      className="rounded-2xl bg-surface-2/50 p-3.5 ring-1 ring-border"
+                      className="rounded-lg bg-background p-3.5 ring-1 ring-border"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className="inline-flex items-center gap-1.5 text-[11px] text-muted-foreground">

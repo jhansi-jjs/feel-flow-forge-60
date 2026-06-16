@@ -7,9 +7,9 @@ import { RightPanel } from "@/components/mindmirror/RightPanel";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "MindMirror AI — Your Mental Health Companion" },
-      { name: "description", content: "AI-powered mental wellness companion with live emotion detection, journaling, sentiment analysis, and mood tracking." },
-      { property: "og:title", content: "MindMirror AI — Your Mental Health Companion" },
+      { title: "MindMirror AI — Multimodal Mental Health Companion" },
+      { name: "description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
+      { property: "og:title", content: "MindMirror AI — Multimodal Mental Health Companion" },
       { property: "og:description", content: "Live emotion detection, journaling, and mood tracking with an empathetic AI companion." },
       { property: "og:type", content: "website" },
     ],
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
 
 function Panel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
-    <section className={`rounded-3xl bg-surface/60 p-5 ring-1 ring-border shadow-soft backdrop-blur-md ${className}`}>
+    <section className={`rounded-xl bg-surface p-4 ring-1 ring-border ${className}`}>
       {children}
     </section>
   );

@@ -7,13 +7,15 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import React, { useEffect, type ReactNode } from "react";
 import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Onboarding } from "@/components/mindmirror/Onboarding";
-import { HistoryDrawer } from "@/components/mindmirror/HistoryDrawer";
+import { HistoryDrawer, HISTORY_EVENT } from "@/components/mindmirror/HistoryDrawer";
+import { SOSModal, SOS_EVENT } from "@/components/mindmirror/SOSModal";
+import { SettingsModal } from "@/components/mindmirror/SettingsModal";
 
 function NotFoundComponent() {
   return (
@@ -80,15 +82,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "MindMirror AI — Your Mental Health Companion" },
+      { title: "MindMirror AI — Multimodal Mental Health Companion" },
       { name: "description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
       { name: "author", content: "MindMirror AI" },
-      { property: "og:title", content: "MindMirror AI — Your Mental Health Companion" },
+      { property: "og:title", content: "MindMirror AI — Multimodal Mental Health Companion" },
       { property: "og:description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "MindMirror AI — Your Mental Health Companion" },
+      { name: "twitter:site", content: "@MindMirrorAI" },
+      { name: "twitter:title", content: "MindMirror AI — Multimodal Mental Health Companion" },
       { name: "twitter:description", content: "Real-time emotion detection, sentiment journaling, and your mood timeline." },
       { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43f374fd-ec5c-4611-9808-3fd34f3cc863/id-preview-44090300--c6538c1a-b04e-4dd9-865e-3c86ba68f842.lovable.app-1781519294116.png" },
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/43f374fd-ec5c-4611-9808-3fd34f3cc863/id-preview-44090300--c6538c1a-b04e-4dd9-865e-3c86ba68f842.lovable.app-1781519294116.png" },
@@ -97,6 +99,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         rel: "stylesheet",
         href: appCss,
+      },
+    ],
+    scripts: [
+      {
+        src: "https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js",
+        defer: true,
       },
     ],
   }),
@@ -122,12 +130,27 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [showSOS, setShowSOS] = React.useState(false);
+  const [showSettings, setShowSettings] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleSOS = () => setShowSOS(true);
+    const handleSettings = () => setShowSettings(true);
+    window.addEventListener(SOS_EVENT, handleSOS);
+    window.addEventListener("mindmirror:open-settings", handleSettings);
+    return () => {
+      window.removeEventListener(SOS_EVENT, handleSOS);
+      window.removeEventListener("mindmirror:open-settings", handleSettings);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
       <Onboarding />
       <HistoryDrawer />
+      <SOSModal open={showSOS} onOpenChange={setShowSOS} />
+      <SettingsModal open={showSettings} onOpenChange={setShowSettings} />
       <div className="pointer-events-none fixed bottom-3 left-3 z-50 rounded-full bg-surface/80 px-3 py-1.5 text-[11px] text-muted-foreground ring-1 ring-border backdrop-blur-md">
         🔒 Privacy First — All processing is local
       </div>

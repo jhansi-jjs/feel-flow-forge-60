@@ -40,33 +40,27 @@ export function RightPanel() {
         )}
       </div>
 
-      <div className="h-56 rounded-2xl bg-surface-2/40 p-3 ring-1 ring-border">
+      <div className="h-44 rounded-lg bg-background p-3 ring-1 ring-border">
         {data.length === 0 ? (
           <div className="grid h-full place-items-center px-4 text-center">
             <div className="flex flex-col items-center gap-2">
               <Sprout className="h-7 w-7 text-primary" />
               <p className="text-sm text-muted-foreground">
-                Save your first journal entry to start your mood timeline 🌱
+                Save your first entry to start your mood timeline
               </p>
             </div>
           </div>
         ) : (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{ top: 8, right: 8, left: -22, bottom: 0 }}>
-              <defs>
-                <linearGradient id="moodLine" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="var(--color-primary)" />
-                  <stop offset="100%" stopColor="oklch(0.7 0.18 320)" />
-                </linearGradient>
-              </defs>
               <CartesianGrid stroke="var(--color-border)" strokeDasharray="3 3" vertical={false} />
               <XAxis dataKey="session" stroke="var(--color-muted-foreground)" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
               <YAxis domain={[0, 10]} stroke="var(--color-muted-foreground)" tick={{ fontSize: 10 }} axisLine={false} tickLine={false} />
               <Tooltip
                 contentStyle={{
-                  background: "var(--color-surface-2)",
+                  background: "var(--color-surface)",
                   border: "1px solid var(--color-border)",
-                  borderRadius: "0.75rem",
+                  borderRadius: "0.5rem",
                   fontSize: "12px",
                   color: "var(--color-foreground)",
                 }}
@@ -74,27 +68,27 @@ export function RightPanel() {
               <Line
                 type="monotone"
                 dataKey="mood"
-                stroke="url(#moodLine)"
-                strokeWidth={3}
+                stroke="var(--color-primary)"
+                strokeWidth={2}
                 dot={{ r: 4, fill: "var(--color-primary)", strokeWidth: 0 }}
-                activeDot={{ r: 6, fill: "var(--color-primary)" }}
+                activeDot={{ r: 5, fill: "var(--color-primary)" }}
               />
             </LineChart>
           </ResponsiveContainer>
         )}
       </div>
 
-      <div className="rounded-2xl bg-gradient-to-br from-[oklch(0.65_0.2_45)]/20 to-transparent p-4 ring-1 ring-border">
+      <div className="rounded-lg bg-background p-3 ring-1 ring-border">
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-[oklch(0.65_0.2_45)]/20">
-              <Flame className="h-5 w-5 text-[oklch(0.78_0.18_55)]" />
+            <div className="grid h-10 w-10 place-items-center rounded-lg bg-warning/20">
+              <Flame className="h-5 w-5 text-warning" />
             </div>
             <div>
               <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Session Streak
               </p>
-              <p className="text-2xl font-bold">{streak} 🔥</p>
+              <p className="text-2xl font-bold">{streak}</p>
             </div>
           </div>
           <p className="text-right text-[11px] leading-tight text-muted-foreground">
@@ -105,7 +99,7 @@ export function RightPanel() {
 
       <Link
         to="/caregiver"
-        className="mt-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-surface-2 px-4 py-3 text-sm font-semibold ring-1 ring-border transition hover:bg-surface-2/70"
+        className="mt-auto inline-flex items-center justify-center gap-2 rounded-lg bg-background px-4 py-3 text-sm font-semibold ring-1 ring-border transition hover:bg-surface-2"
       >
         <Users className="h-4 w-4" />
         Caregiver View

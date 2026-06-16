@@ -42,31 +42,41 @@
 :root {
   --radius: 1rem;
   /* Deep navy #0F172A base */
-  --background: oklch(0.21 0.04 265);
-  --foreground: oklch(0.97 0.01 250);
-  --surface: oklch(0.26 0.04 265);
-  --surface-2: oklch(0.3 0.04 265);
-  --card: oklch(0.26 0.04 265);
-  --card-foreground: oklch(0.97 0.01 250);
-  --popover: oklch(0.26 0.04 265);
-  --popover-foreground: oklch(0.97 0.01 250);
-  /* Purple #7C3AED */
-  --primary: oklch(0.55 0.25 290);
-  --primary-foreground: oklch(0.99 0 0);
-  --secondary: oklch(0.32 0.04 265);
-  --secondary-foreground: oklch(0.97 0.01 250);
-  --muted: oklch(0.3 0.03 265);
-  --muted-foreground: oklch(0.7 0.03 260);
-  --accent: oklch(0.55 0.25 290);
-  --accent-foreground: oklch(0.99 0 0);
-  --destructive: oklch(0.62 0.24 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(1 0 0 / 8%);
-  --input: oklch(1 0 0 / 10%);
-  --ring: oklch(0.55 0.25 290);
-  --sos: oklch(0.68 0.21 45);
-  --positive: oklch(0.74 0.16 155);
-  --warning: oklch(0.78 0.16 75);
+  --background: #0F172A;
+  --foreground: #F8FAFC;
+  --surface: #1E293B;
+  --surface-2: #263548;
+  --card: #1E293B;
+  --card-foreground: #F8FAFC;
+  --popover: #1E293B;
+  --popover-foreground: #F8FAFC;
+  /* Purple accent #7C3AED */
+  --primary: #7C3AED;
+  --primary-foreground: #FFFFFF;
+  --secondary: #1E293B;
+  --secondary-foreground: #F8FAFC;
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
+  --accent: #7C3AED;
+  --accent-foreground: #FFFFFF;
+  /* Teal */
+  --teal: #0D9488;
+  /* Danger red #DC2626 */
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  /* Border #334155 */
+  --border: #334155;
+  --input: #1E293B;
+  --ring: #7C3AED;
+  /* SOS red */
+  --sos: #DC2626;
+  --sos-foreground: #FFFFFF;
+  /* Success green #0F6E56 */
+  --positive: #0F6E56;
+  --positive-foreground: #FFFFFF;
+  /* Warning */
+  --warning: #F59E0B;
+  --warning-foreground: #000000;
 }
 
 @layer base {
