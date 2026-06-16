@@ -91,7 +91,7 @@ function CaregiverPage() {
                 </tr>
               </thead>
               <tbody>
-                {ROWS.map((r) => (
+                {rows.map((r: Row) => (
                   <tr
                     key={r.user}
                     className={`border-b border-border last:border-0 transition ${
