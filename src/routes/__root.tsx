@@ -12,6 +12,8 @@ import { Toaster } from "sonner";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { Onboarding } from "@/components/mindmirror/Onboarding";
+import { HistoryDrawer } from "@/components/mindmirror/HistoryDrawer";
 
 function NotFoundComponent() {
   return (
