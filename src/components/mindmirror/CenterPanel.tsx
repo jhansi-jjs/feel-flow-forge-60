@@ -54,7 +54,8 @@ export function CenterPanel() {
   };
 
   const startVoice = () => {
-    const SpeechRecognition = (window as unknown as { SpeechRecognition?: typeof window.SpeechRecognition; webkitSpeechRecognition?: typeof window.SpeechRecognition }).SpeechRecognition || (window as unknown as { webkitSpeechRecognition?: typeof window.SpeechRecognition }).webkitSpeechRecognition;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
     if (!SpeechRecognition) {
       toast.error("Please use Google Chrome for voice input.");
       return;
@@ -71,7 +72,8 @@ export function CenterPanel() {
       setIsListening(false);
       setVoiceTone("Error — try again");
     };
-    recognition.onresult = (e: SpeechRecognitionEvent) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recognition.onresult = (e: any) => {
       const transcript = e.results[0][0].transcript;
       setText((prev) => (prev ? prev + " " + transcript : transcript));
       setVoiceTone("Captured ✓");
