@@ -12,6 +12,7 @@ const EMOTIONS = [
 export function LeftPanel() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [active, setActive] = useState(false);
+  const [denied, setDenied] = useState(false);
   const [current, setCurrent] = useState(EMOTIONS[0]);
 
   const toggle = async () => {
@@ -28,9 +29,10 @@ export function LeftPanel() {
         videoRef.current.srcObject = stream;
         await videoRef.current.play();
       }
+      setDenied(false);
       setActive(true);
     } catch {
-      /* ignore */
+      setDenied(true);
     }
   };
 
