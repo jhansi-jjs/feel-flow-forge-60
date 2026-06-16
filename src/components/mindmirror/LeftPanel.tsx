@@ -121,9 +121,13 @@ export function LeftPanel() {
         🔴 SOS Alert
       </button>
 
-      <div className="flex items-center justify-center gap-1.5 text-[11px] text-muted-foreground">
-        <Activity className="h-3 w-3" />
-        Monitoring {active ? "live" : "paused"}
+      <div className="flex items-center justify-center gap-1.5 text-center text-[11px] text-muted-foreground">
+        <Activity className="h-3 w-3 shrink-0" />
+        {active
+          ? "🟢 Emotion detection active"
+          : denied
+            ? "Camera access needed for face detection."
+            : "Click Start to begin emotion detection."}
       </div>
     </div>
   );
