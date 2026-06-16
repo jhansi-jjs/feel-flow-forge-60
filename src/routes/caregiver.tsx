@@ -103,7 +103,7 @@ function CaregiverPage() {
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
                         <div className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-primary/20 text-xs font-bold text-primary">
-                          {r.user.split(" ").map((n) => n[0]).join("")}
+                          {r.user.split(" ").map((n: string) => n[0]).join("").slice(0, 2)}
                         </div>
                         <span className="font-semibold">{r.user}</span>
                       </div>
