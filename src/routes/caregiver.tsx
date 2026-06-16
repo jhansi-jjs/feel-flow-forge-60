@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Users } from "lucide-react";
+import { useSessions } from "@/hooks/use-sessions";
 
 export const Route = createFileRoute("/caregiver")({
   head: () => ({
@@ -22,13 +23,37 @@ type Row = {
   highlight?: boolean;
 };
 
-const ROWS: Row[] = [
+const DUMMY: Row[] = [
   { user: "Priya S", lastSession: "Today 2:30 PM", mood: "3/10", risk: { dot: "🟢", label: "Low" }, status: "Stable" },
   { user: "Arjun M", lastSession: "Yesterday", mood: "7/10", risk: { dot: "🔴", label: "High" }, status: "Needs Attention", highlight: true },
   { user: "Meena R", lastSession: "2 days ago", mood: "5/10", risk: { dot: "🟡", label: "Medium" }, status: "Monitoring" },
 ];
 
+function riskBadge(r: number) {
+  if (r > 7) return { dot: "🔴", label: "High" };
+  if (r >= 4) return { dot: "🟡", label: "Medium" };
+  return { dot: "🟢", label: "Low" };
+}
+
 function CaregiverPage() {
+  const { sessions } = useSessions();
+  const latest = sessions[sessions.length - 1];
+  const youRow: Row | null = latest
+    ? {
+        user: "You (current user)",
+        lastSession: new Date(latest.timestamp).toLocaleString(undefined, {
+          month: "short",
+          day: "numeric",
+          hour: "numeric",
+          minute: "2-digit",
+        }),
+        mood: `${latest.riskScore}/10`,
+        risk: riskBadge(latest.riskScore),
+        status: latest.riskScore > 7 ? "Needs Attention" : latest.riskScore >= 4 ? "Monitoring" : "Stable",
+        highlight: latest.riskScore > 7,
+      }
+    : null;
+  const rows: Row[] = youRow ? [youRow, ...DUMMY] : DUMMY;
   return (
     <div className="min-h-screen p-4 sm:p-6">
       <div className="mx-auto flex max-w-5xl flex-col gap-6">
