@@ -1,6 +1,9 @@
-import { Brain, Bell, Settings } from "lucide-react";
+import { Brain, Bell, Settings, History } from "lucide-react";
+import { HISTORY_EVENT } from "./HistoryDrawer";
 
 export function TopNav() {
+  const openHistory = () => window.dispatchEvent(new Event(HISTORY_EVENT));
+
   return (
     <header className="flex items-center justify-between gap-4 rounded-2xl bg-surface/70 px-4 py-3 ring-1 ring-border backdrop-blur-md">
       <div className="flex min-w-0 items-center gap-3">
@@ -17,6 +20,13 @@ export function TopNav() {
         <button className="relative grid h-10 w-10 place-items-center rounded-xl bg-surface-2 ring-1 ring-border transition hover:bg-surface-2/70">
           <Bell className="h-4 w-4" />
           <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-sos ring-2 ring-surface" />
+        </button>
+        <button
+          onClick={openHistory}
+          aria-label="Session history"
+          className="grid h-10 w-10 place-items-center rounded-xl bg-surface-2 ring-1 ring-border transition hover:bg-surface-2/70"
+        >
+          <History className="h-4 w-4" />
         </button>
         <button className="grid h-10 w-10 place-items-center rounded-xl bg-surface-2 ring-1 ring-border transition hover:bg-surface-2/70">
           <Settings className="h-4 w-4" />
